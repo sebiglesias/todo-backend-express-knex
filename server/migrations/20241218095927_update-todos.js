@@ -1,11 +1,11 @@
 exports.up = function(knex) {
-    return knex.schema.alterTable('todos', function(table) {
-        table.string('description');
-        table.integer('user_id').unsigned().nullable();
-        table.foreign('user_id').references('user.id');
-    }).createTable('users', function(table) {
+    return knex.schema.createTable('users', function(table) {
         table.increments('id').primary();
         table.string('name');
+    }).alterTable('todos', function(table) {
+        table.string('description');
+        table.integer('user_id').nullable();
+        table.foreign('user_id').references('users.id');
     }).createTable('comments', function(table) {
         table.increments('id').primary();
         table.string('comment');
